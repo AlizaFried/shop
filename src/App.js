@@ -1,10 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./componenets/Header/Header";
+import Products from "./componenets/Products/Products";
 
 function App() {
   return (
     <div className="App">
-     check!!!!
+      <Header />
+      <Products />
     </div>
   );
 }
