@@ -273,14 +273,50 @@ const products = [
 ];
 
 class App extends Component {
+  state = { isHidden: false };
+
+  show = () => {
+    this.setState({ isHidden: !this.state.isHidden });
+  };
+
   render() {
     return (
       <div className="App">
         <Header />
-        <Products products={products} />
+        <button onClick={this.show}>
+          {this.state.isHidden ? "Hide" : "Show"} Products
+        </button>
+        {this.state.isHidden && <Products products={products} />}
       </div>
     );
   }
 }
 
 export default App;
+
+// import { Component } from "react";
+
+// export default class Counter extends Component {
+//   state = { count: 10, title: "BLah blah" };
+//   render() {
+//     return (
+//       <>
+//         <button
+//           onClick={() => {
+//             this.setState({ count: this.state.count - 1 });
+//           }}
+//         >
+//           -
+//         </button>
+//         <span>{this.state.count}</span>
+//         <button
+//           onClick={() => {
+//             this.setState({ count: this.state.count + 1 });
+//           }}
+//         >
+//           +
+//         </button>
+//       </>
+//     );
+//   }
+// }
