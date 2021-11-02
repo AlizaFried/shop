@@ -2,6 +2,7 @@ import { Component } from "react";
 import "./App.css";
 import Header from "./componenets/Header/Header";
 import Products from "./componenets/Products/Products";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // const products = [
 //   {
@@ -276,30 +277,39 @@ class App extends Component {
   state = {
     isHidden: false,
     products: [],
+    loading: true,
   };
 
-  componentDidMount() {
+  fetch() {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((data) =>
         this.setState({
           products: data,
+          loading: false,
         })
       );
   }
 
-  show = () => {
-    this.setState({ isHidden: !this.state.isHidden });
-  };
+  componentDidMount() {
+    this.fetch();
+  }
+
+  // show = () => {
+  //   this.fetch();
+  //   this.setState({ isHidden: !this.state.isHidden });
+  // };
 
   render() {
     return (
       <div className="App">
         <Header />
-        <button onClick={this.show}>
+        {/* <button onClick={this.show}>
           {this.state.isHidden ? "Hide" : "Show"} Products
-        </button>
-        {this.state.isHidden && <Products products={this.state.products} />}
+        </button> */}
+        {this.state.loading ? <CircularProgress /> : ""}
+        {<Products products={this.state.products} />}
+        {/* this.state.isHidden && */}
       </div>
     );
   }
