@@ -278,6 +278,9 @@ class App extends Component {
     isHidden: false,
     products: [],
     loading: true,
+    valueRange: [0, 0],
+    minValue: 0,
+    maxValue: 0,
   };
 
   fetch() {
@@ -287,29 +290,48 @@ class App extends Component {
         this.setState({
           products: data,
           loading: false,
+          minValue: Math.min.apply(
+            Math,
+            data.map(function (item) {
+              return item.price;
+            })
+          ),
+          maxValue: Math.max.apply(
+            Math,
+            data.map(function (item) {
+              return item.price;
+            })
+          ),
+          valueRange: [this.state.minValue, this.state.maxValue],
         })
       );
   }
+
+  handleValueChange = (newValue) => {
+    this.setState({ valueRange: newValue });
+  };
 
   componentDidMount() {
     this.fetch();
   }
 
-  // show = () => {
-  //   this.fetch();
-  //   this.setState({ isHidden: !this.state.isHidden });
-  // };
-
   render() {
+    console.log(this.state.valueRange[0]);
     return (
       <div className="App">
-        <Header />
-        {/* <button onClick={this.show}>
-          {this.state.isHidden ? "Hide" : "Show"} Products
-        </button> */}
+        <Header
+          handleValueChange={this.handleValueChange}
+          valueRange={this.state.valueRange}
+          minValue={this.state.minValue}
+          maxValue={this.state.maxValue}
+        />
         {this.state.loading ? <CircularProgress /> : ""}
-        {<Products products={this.state.products} />}
-        {/* this.state.isHidden && */}
+        {
+          <Products
+            products={this.state.products}
+            valueRange={this.state.valueRange}
+          />
+        }
       </div>
     );
   }

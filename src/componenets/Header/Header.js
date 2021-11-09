@@ -1,7 +1,12 @@
 import { Component } from "react";
 import "./Header.css";
+import Slider from "@mui/material/Slider";
 
 class Header extends Component {
+  valueChange = (event, newValue) => {
+    this.props.handleValueChange(newValue);
+  };
+
   render() {
     return (
       <div class="product-filter">
@@ -34,6 +39,19 @@ class Header extends Component {
               <option value="/">Date, new to old</option>
               <option value="/">Date, old to new</option>
             </select>
+          </div>
+
+          <div class="collection-sort">
+            <label>Filter by Price</label>
+            <Slider
+              getAriaLabel={() => "Price Range"}
+              value={this.props.valueRange}
+              onChange={this.valueChange}
+              valueLabelDisplay="auto"
+              min={this.props.minValue}
+              max={this.props.maxValue}
+              // getAriaValueText={valuetext}
+            />
           </div>
         </div>
       </div>

@@ -4,15 +4,21 @@ import "./Products.css";
 
 class Products extends Component {
   render() {
+    console.log(this.props.valueRange);
     return (
       <div className="products">
-        {this.props.products.map((product) => (
-          <Product
-            title={product.title}
-            image={product.image}
-            price={product.price}
-          />
-        ))}
+        {this.props.products.map((product) =>
+          product.price >= this.props.valueRange[0] &&
+          product.price <= this.props.valueRange[1] ? (
+            <Product
+              title={product.title}
+              image={product.image}
+              price={product.price}
+            />
+          ) : (
+            ""
+          )
+        )}
       </div>
     );
   }
